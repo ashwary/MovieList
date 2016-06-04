@@ -28,7 +28,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.movies_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        if (recyclerView != null) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        }
 
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
@@ -38,7 +40,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 List<Movie> movies = response.body().getResults();
-                recyclerView.setAdapter(new MovieAdapter(movies, R.layout.list_item_movie, getApplicationContext()));
+                if (recyclerView != null) {
+                    recyclerView.setAdapter(new MovieAdapter(movies, R.layout.list_item_movie, getApplicationContext()));
+                }
                 Log.d(TAG, "Number of movies received: " + movies.size());
             }
 
